@@ -355,8 +355,6 @@ In `TrainingCategoryResource.php` :
 
 
 
-
-
 <br/><br/>
 
 -----
@@ -364,6 +362,47 @@ In `TrainingCategoryResource.php` :
 <br/><br/>
 
 
+
+## 6- Navigation Badge in Filament
+
+
+<img src="https://i.imgur.com/6ke6lWd.png" />
+
+
+#### 6.1. Place this code inside your Filament `Resource` class, e.g. `TrainingCategoryResource.php` :
+
+```
+public static function getNavigationBadge(): ?string
+{
+    return (string) static::getModel()::count();
+}
+
+public static function getNavigationBadgeColor(): ?string
+{
+    return 'purple'; // change color here
+}
+
+protected static ?string $navigationBadgeTooltip = 'Total number of trainings';
+
+```
+
+
+#### 6.2. 🎨 Available Colors (use in `getNavigationBadgeColor()` ):
+
+```
+primary, success, warning, danger, info, gray, secondary, blue, red, green, yellow, purple, pink, indigo, teal, orange, cyan, lime, amber, fuchsia, rose, sky, violet, stone, zinc, neutral, slate
+```
+
+✅ Just replace 'purple' with any of these.
+
+
+
+
+<br/><br/>
+
+-----
+
+<br/><br/>
 
 
 
