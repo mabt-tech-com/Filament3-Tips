@@ -204,6 +204,11 @@ protected function getRedirectUrl(): string
 
 
 
+## 5- Reorderable Items Using position & Observer in Filament
+
+<img src="https://i.imgur.com/RaliDLU.png" />
+
+<img src="https://i.imgur.com/8vQRDCp.png" />
 
 
 
@@ -213,6 +218,20 @@ protected function getRedirectUrl(): string
 
 
 
+
+
+
+
+
+
+
+
+
+<br/><br/>
+
+-----
+
+<br/><br/>
 
 
 
