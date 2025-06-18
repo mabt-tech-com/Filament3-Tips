@@ -136,6 +136,7 @@ class ListTags extends \Filament\Resources\Pages\ListRecords
 <br/><br/>
 
 
+
 ## 3- How to remove the delete button from The Edit Page : 
 
 <img src="https://i.imgur.com/v0xRJjS.png" />
@@ -161,6 +162,44 @@ class EditTag extends EditRecord
 }
 
 ```
+
+
+
+
+<br/><br/>
+
+-----
+
+<br/><br/>
+
+
+
+
+## 4- Redirect to Index After Create/Edit in Filament : 
+
+In your `CreateX.php` or `EditX.php` page, override the `getRedirectUrl()` method:
+
+
+```
+protected function getRedirectUrl(): string
+{
+    return static::getResource()::getUrl('index');
+}
+```
+
+
+✅ Works for both create and edit pages.
+
+
+
+
+<br/><br/>
+
+-----
+
+<br/><br/>
+
+
 
 
 
