@@ -212,15 +212,144 @@ protected function getRedirectUrl(): string
 
 
 
+### 🧱 5.1. Migration Setup
+
+Make sure your table has a `position` column defaulting to 0:
+
+
+```
+$table->integer('position')->default(0);
+
+```
+
+### ⚙️ 5.2. Auto-Assign position on Create
+
+#### 5.2.a. Option 1: Use booted() in the model ✅
+
+```
+protected static function booted()
+{
+    static::creating(function (TrainingCategory $item) {
+        $item->position = TrainingCategory::max('position') + 1;
+    });
+}
+
+```
+
+
+#### 5.2.b. Option 2: Hide the position field in the resource form + Auto-Assign in Resource
+
+
+```
+
+public static function form(Form $form): Form
+    {
+        return $form
+            ->schema([ .....
+                    // ADD this :     
+                    Forms\Components\Hidden::make('position'),
+
+```
+
+Then in your resource’s `beforeCreate()`:
+
+```
+public static function beforeCreate($data): array
+{
+    $data['position'] = TrainingCategory::max('position') + 1;
+
+    return $data;
+}
+
+```
+
+### 👁️ 5.3. Keep Positions Consistent After Delete
+
+When you delete an item, its position is removed — but the other items' positions stay the same, causing gaps (e.g., 1, 2, 4, 5…).
+To fix this, use an observer that automatically re-indexes all remaining items after deletion.
+
+#### 5.3.a. 🧠 Full Observer Logic (with explanation):
+
+```
+<?php
+
+namespace App\Observers;
+
+use App\Models\TrainingCategory;
+use Illuminate\Support\Facades\DB;
+
+class TrainingCategoryObserver
+{
+    // Assign the next available position when a new category is created
+    public function creating(TrainingCategory $category)
+    {
+        $category->position = (int) TrainingCategory::max('position') + 1;
+    }
+
+    // After a category is deleted, re-order all remaining items to remove gaps
+    public function deleted(TrainingCategory $category)
+    {
+        $orderColumn = 'position'; // the column we use to sort
+        $keyName = $category->getKeyName(); // usually 'id'
+
+        // Get all IDs ordered by current position
+        $ordered = TrainingCategory::orderBy($orderColumn, 'asc')->pluck('id');
+
+        // Build SQL CASE logic to reassign positions: 
+        // e.g., case when id=3 then 1 when id=5 then 2 ...
+        $cases = collect($ordered)
+            ->map(fn ($key, int $index) => sprintf(
+                'when %s = %s then %d',
+                $keyName,
+                DB::getPdo()->quote($key), // safely quote the ID for SQL
+                $index + 1 // new position starts from 1
+            ))
+            ->implode(' ');
+
+        // Perform one bulk update to apply the new positions
+        TrainingCategory::whereIn('id', $ordered)->update([
+            $orderColumn => DB::raw('case ' . $cases . ' end'),
+        ]);
+    }
+}
+```
+
+#### 5.3.b. 🛠️ Register the Observer
+
+In your `App\Providers\EventServiceProvider` :
+
+```
+use App\Models\TrainingCategory;
+use App\Observers\TrainingCategoryObserver;
+
+public function boot(): void
+{
+    TrainingCategory::observe(TrainingCategoryObserver::class);
+}
+```
+
+#### 5.3.c. 🧪 Artisan Command to Create the Observer
+
+Use this to quickly scaffold the observer:
+
+
+```
+php artisan make:observer TrainingCategoryObserver --model=TrainingCategory
+```
+
+This will place the file in `app/Observers/TrainingCategoryObserver.php` and prefill it with model methods like `created`, `deleted`, etc.
 
 
 
 
+### 📦 5.4. Make Table Reorderable in Resource
 
+In `TrainingCategoryResource.php` : 
 
-
-
-
+```
+->defaultSort('position')
+->reorderable('position')
+```
 
 
 
