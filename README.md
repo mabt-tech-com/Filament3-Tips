@@ -10,12 +10,15 @@
 <br/><br/>
 
 
+
+
+
 ## 1- Adding Tab Filters ( archive / all ) above your table :
 
 
 <img src="https://i.imgur.com/jv4kMit.png" />
 
-### 1. Enable Soft Deletes on Your Model
+### 1.1. Enable Soft Deletes on Your Model
 In `app/Models/Tags.php`:
 
 
@@ -41,7 +44,7 @@ Schema::table('tags', function (Blueprint $table) {
 });
 ```
 
-### 2. Add Tabs in Your Resource Page
+### 1.2. Add Tabs in Your Resource Page
 In `app/Filament/Resources/TagsResource/Pages/ListTags.php`:
 
 ```
@@ -66,7 +69,7 @@ class ListTags extends \Filament\Resources\Pages\ListRecords
 ```
 
 
-### 3. Make Sure Your Resource Supports Soft Deletes
+### 1.3. Make Sure Your Resource Supports Soft Deletes
 In `TagsResource.php`, inside the `getEloquentQuery()` method, add this if needed:
 
 ```
@@ -81,11 +84,73 @@ public static function getEloquentQuery(): Builder
 That’s it! ✅ You now have working tabs to filter "All" and "Archived" records using soft deletes.
 
 
+
+
+
+
 <br/><br/>
 
 -----
 
 <br/><br/>
+
+
+
+
+## 2- Customize the "Create" button in the header (change label + icon)
+
+<img src="https://i.imgur.com/m2NSfLy.png" />
+
+
+In your resource list page, e.g. `app/Filament/Resources/TagsResource/Pages/ListTags.php` :
+
+
+```
+use Filament\Actions;
+use Filament\Support\Enums\IconPosition;
+
+class ListTags extends \Filament\Resources\Pages\ListRecords
+{
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\CreateAction::make()
+                ->label('New Tag') // Custom label
+                ->icon('heroicon-o-plus-circle') // Custom icon
+                ->iconPosition(IconPosition::Before), // Icon on the left
+        ];
+    }
+}
+
+```
+
+
+
+
+
+
+<br/><br/>
+
+-----
+
+<br/><br/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
