@@ -136,9 +136,31 @@ class ListTags extends \Filament\Resources\Pages\ListRecords
 <br/><br/>
 
 
+## 3- How to remove the delete button from The Edit Page : 
 
+<img src="https://i.imgur.com/v0xRJjS.png" />
 
+Open your Edit page class, e.g.
+`app/Filament/Resources/TagsResource/Pages/EditTag.php` , 
 
+Override the header‑actions to exclude Delete:
+
+```
+use Filament\Actions;
+use Filament\Resources\Pages\EditRecord;
+
+class EditTag extends EditRecord
+{
+    protected function getHeaderActions(): array
+    {
+        return [
+            Actions\SaveAction::make(),
+            // no DeleteAction here!
+        ];
+    }
+}
+
+```
 
 
 
