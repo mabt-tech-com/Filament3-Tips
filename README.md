@@ -158,7 +158,8 @@ class EditTag extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Actions\SaveAction::make(),
+                // REMOVE THE DeleteAction::make() from here : 
+            // Actions\DeleteAction::make(),
             // no DeleteAction here!
         ];
     }
