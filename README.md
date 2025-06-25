@@ -499,3 +499,48 @@ class CreatePage extends CreateRecord
 <br/><br/>
 
 
+
+## 8- Using Heroicons in your filament project 
+
+
+<img src="https://i.imgur.com/PYyUQb0.png" />
+
+<img src="https://i.imgur.com/EPIGLqJ.png" />
+
+<img src="https://i.imgur.com/ruU7bTG.png" />
+ 
+<img src="https://i.imgur.com/nqYev9O.png" />
+
+```
+composer require blade-ui-kit/blade-heroicons
+```
+
+visit : 
+
+* https://blade-ui-kit.com/blade-icons
+
+in our exmaple we tested the icon in the `$navigationIcon` :
+
+```
+protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
+```
+
+
+
+
+
+
+
+
+<br/><br/>
+
+-----
+
+<br/><br/>
+
+
+
+
+
+
+
