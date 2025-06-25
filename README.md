@@ -406,3 +406,96 @@ primary, success, warning, danger, info, gray, secondary, blue, red, green, yell
 
 
 
+
+## 7- Making Custom notification After Successful Create Action
+
+
+<img src="https://i.imgur.com/c8zT8A8.png" />
+
+When creating a record with Filament’s `CreateRecord`, a default notification appears. Adding a custom notification in `afterCreate()` can result in two notifications. Here’s how to override or remove the default one and use your custom message ("Page created successfully!").
+
+### 7.1. Option 1: Override Default Notification
+
+Replace the default notification by overriding `getCreatedNotification()` .
+
+```
+<?php
+
+namespace App\Filament\Resources\PageResource\Pages;
+
+use App\Filament\Resources\PageResource;
+use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
+
+class CreatePage extends CreateRecord
+{
+    protected static string $resource = PageResource::class;
+
+
+
+    // Override Default Notification using getCreatedNotification()  :
+    protected function getCreatedNotification(): ?Notification
+    {
+        return Notification::make()
+            ->title('Page created successfully!')
+            ->success();
+    }
+
+
+
+}
+```
+
+
+
+
+### 7.2. Option 2: Disable Default Notification and Use `afterCreate()`
+
+Disable the default notification and send your custom one in `afterCreate()` . 
+
+
+```
+<?php
+
+namespace App\Filament\Resources\PageResource\Pages;
+
+use App\Filament\Resources\PageResource;
+use Filament\Notifications\Notification;
+use Filament\Resources\Pages\CreateRecord;
+
+class CreatePage extends CreateRecord
+{
+    protected static string $resource = PageResource::class;
+
+
+    // this would disable the default notification :     
+    protected function getCreatedNotification(): ?Notification
+    {
+        return null;
+    }
+
+    // My custom notif using afterCreate() :     
+    protected function afterCreate(): void
+    {
+        Notification::make()
+            ->title('Page created successfully!')
+            ->success()
+            ->send();
+    }
+
+
+
+}
+
+```
+
+
+
+
+<br/><br/>
+
+-----
+
+<br/><br/>
+
+
