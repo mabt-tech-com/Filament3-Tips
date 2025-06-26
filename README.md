@@ -20,7 +20,7 @@
 
 <img src="https://i.imgur.com/W8RIKi0.png" />
 
-<img src='https://i.imgur.com/njDc59i.png" />
+<img src="https://i.imgur.com/njDc59i.png" />
 
 
 ### 1.1. Enable Soft Deletes on Your Model
