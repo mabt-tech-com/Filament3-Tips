@@ -560,8 +560,100 @@ https://filamentphp.com/docs/3.x/forms/fields/tags-input#overview
 <br/><br/>
 
 
+## 10 - Adding View/Edit Tabs Above Records
 
 
+<img src="https://i.imgur.com/RCZmDuw.png" />
+
+
+### 10.1. Enable Sub-Navigation
+
+In your **TagResource** (e.g. `app/Filament/Resources/TagResource.php`), import and set:
+
+
+```
+use Filament\Pages\SubNavigationPosition;
+
+class TagResource extends Resource
+{
+    protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
+    // ...
+}
+```
+
+### 10.2. Define View & Edit Pages
+
+| Note: When you generate a Filament resource you may only get `index`, `create`, and `edit` pages (no `view`). If that’s the case, add the view entry manually:
+
+```
+// in app/Filament/Resources/TagResource.php add : 
+
+public static function getPages(): array
+{
+    return [
+        'index'  => Pages\ListTags::route('/'),
+        'view'   => Pages\ViewTag::route('/{record}'),
+        'edit'   => Pages\EditTag::route('/{record}/edit'),
+    ];
+}
+```
+
+#### 10.2.b. Create the ViewTag page class manually
+
+If you don’t have the `ViewTag` page file (e.g. `app/Filament/Resources/TagResource/Pages/ViewTag.php`), you can either use the Filament make command or create it yourself:
+
+#### Using Artisan (Filament generator) :
+
+
+```
+php artisan make:filament-page Resources/TagResource/Pages/ViewTag --resource=TagResource --view
+```
+
+#### Manually create the file : 
+
+```
+<?php
+
+namespace App\Filament\Resources\TagResource\Pages;
+
+use App\Filament\Resources\TagResource;
+use Filament\Resources\Pages\ViewRecord;
+
+class ViewTag extends ViewRecord
+{
+    protected static string $resource = TagResource::class;
+}
+```
+
+
+### 10.3. Generate the Tabs
+
+Add this method to the bottom of **TagResource** :
+
+```
+use Filament\Resources\Pages\Page;
+
+public static function getRecordSubNavigation(Page $page): array
+{
+    return $page->generateNavigationItems([
+        Pages\ViewTag::class,
+        Pages\EditTag::class,
+    ]);
+}
+```
+
+
+
+
+
+
+
+
+<br/><br/>
+
+-----
+
+<br/><br/>
 
 
 
