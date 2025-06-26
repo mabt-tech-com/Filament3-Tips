@@ -58,22 +58,22 @@ use App\Models\Tags;
 
 class ListTags extends \Filament\Resources\Pages\ListRecords
 {
-    public function getTabs(): array
-    {
-        return [
 
-          'active' => Tab::make(__('Active'))
+public function getTabs(): array {
+    return [
+        'active' => Tab::make(__('Active'))
             ->badge(BlogsTags::whereNull('deleted_at')->count())
             ->modifyQueryUsing(fn ($query) => $query->whereNull('deleted_at')),
 
-            'all' => Tab::make(__('All'))
-                ->badge(Tags::count()),
+        'all' => Tab::make(__('All'))
+            ->badge(BlogsTags::withTrashed()->count())
+            ->modifyQueryUsing(fn ($query) => $query->withTrashed()),
 
-            'archived' => Tab::make(__('Archived'))
-                ->badge(Tags::onlyTrashed()->count())
-                ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
-        ];
-    }
+        'archived' => Tab::make(__('Archived'))
+            ->badge(BlogsTags::onlyTrashed()->count())
+            ->modifyQueryUsing(fn ($query) => $query->onlyTrashed()),
+    ];
+ }
 }
 
 ```
