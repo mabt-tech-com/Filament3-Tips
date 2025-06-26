@@ -633,7 +633,7 @@ Add this method to the bottom of **TagResource** :
 ```
 use Filament\Resources\Pages\Page;
 
-public static function getRecordSubNavigation(Page $page): array
+public static function getRecordSubNavigation(\Filament\Resources\Pages\Page $page): array
 {
     return $page->generateNavigationItems([
         Pages\ViewTag::class,
