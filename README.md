@@ -94,7 +94,20 @@ public static function getEloquentQuery(): Builder
 That’s it! ✅ You now have working tabs to filter "All" and "Archived" records using soft deletes.
 
 
+### 1.4. (Restore/Archive) Action Buttons 
 
+In `TagsResource.php`, Add `RestoreAction::make()` in `->actions()`.
+Also, Optionally add `TrashedFilter::make()` in `->filters()`.
+
+```
+->actions([
+    Tables\Actions\RestoreAction::make(),
+])
+
+->filters([
+    Tables\Filters\TrashedFilter::make(),
+])
+```
 
 
 
