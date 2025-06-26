@@ -527,6 +527,20 @@ protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
 
 
+<br/><br/>
+
+-----
+
+<br/><br/>
+
+
+
+
+## 9- How to add tag field ( press enter to add your tags ) :
+
+<img src="https://filamentphp.com/docs/3.x/images/light/forms/fields/tags-input/simple.jpg" />
+
+https://filamentphp.com/docs/3.x/forms/fields/tags-input#overview
 
 
 
