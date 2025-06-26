@@ -20,6 +20,8 @@
 
 <img src="https://i.imgur.com/W8RIKi0.png" />
 
+<img src='https://i.imgur.com/njDc59i.png" />
+
 
 ### 1.1. Enable Soft Deletes on Your Model
 In `app/Models/Tags.php`:
@@ -59,6 +61,11 @@ class ListTags extends \Filament\Resources\Pages\ListRecords
     public function getTabs(): array
     {
         return [
+
+          'active' => Tab::make(__('Active'))
+            ->badge(BlogsTags::whereNull('deleted_at')->count())
+            ->modifyQueryUsing(fn ($query) => $query->whereNull('deleted_at')),
+
             'all' => Tab::make(__('All'))
                 ->badge(Tags::count()),
 
