@@ -658,6 +658,22 @@ public static function getRecordSubNavigation(\Filament\Resources\Pages\Page $pa
 
 
 
+<br/><br/>
+
+-----
+
+<br/><br/>
+
+
+
+
+## 11- Adding a label to `repeater` items based on their content
+
+<img src="https://filamentphp.com/docs/3.x/images/light/forms/fields/repeater/labelled.jpg" />
+
+https://filamentphp.com/docs/3.x/forms/fields/repeater#adding-a-label-to-repeater-items-based-on-their-content
+
+
 
 
 
