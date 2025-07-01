@@ -684,5 +684,24 @@ https://filamentphp.com/docs/3.x/forms/fields/repeater#adding-a-label-to-repeate
 
 <br/><br/>
 
+## 12- Filament Grouping Actions ( DropDown : view, edit, delete) :
+
+<img src="https://filamentphp.com/docs/3.x/images/light/actions/group/simple.jpg" />
+
+https://filamentphp.com/docs/3.x/actions/grouping-actions
 
 
+```
+ActionGroup::make([
+    Action::make('view'),
+    Action::make('edit'),
+    Action::make('delete'),
+])
+```
+
+
+<br/><br/>
+
+-----
+
+<br/><br/>
